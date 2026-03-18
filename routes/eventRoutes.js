@@ -44,7 +44,7 @@ router.delete("/:id", async(req,res)=>{
 
 await Event.findByIdAndDelete(req.params.id);
 
-res.json({message:"Event deleted"});
+res.json({message:"Event removed successfully"});
 
 });
 
