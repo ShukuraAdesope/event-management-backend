@@ -35,7 +35,7 @@ return res.status(400).json({message:"User not found"});
 const validPassword = await bcrypt.compare(password,user.password);
 
 if(!validPassword){
-return res.status(400).json({message:"Invalid password"});
+return res.status(400).json({message:"password is incorrect"});
 }
 
 const token = jwt.sign(
