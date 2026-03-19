@@ -8,18 +8,33 @@ const eventRoutes = require("./routes/eventRoutes");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+// Root route (important for Render/browser test)
+app.get("/", (req, res) => {
+    res.send("Event Management Backend is Running 🚀");
+});
 
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB Connected"))
+.catch(err => {
+    console.error("MongoDB connection error:", err);
+});
+
+// IMPORTANT: Use Render dynamic port
 const PORT = process.env.PORT || 5000;
 
+// Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
