@@ -16,20 +16,15 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 
-// Root route (important for Render/browser test)
+// Root route (for browser testing)
 app.get("/", (req, res) => {
     res.send("Event Management Backend is Running 🚀");
 });
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB Connected"))
-.catch(err => {
-    console.error("MongoDB connection error:", err);
-});
+// MongoDB Connection (FIXED ✅)
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.error("MongoDB connection error:", err));
 
 // IMPORTANT: Use Render dynamic port
 const PORT = process.env.PORT || 5000;
